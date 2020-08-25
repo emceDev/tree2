@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useContext,createContext,context } from 'react';
 import './App.css';
 
-function App() {
+import { Switch, Route } from 'react-router-dom';
+import {FamAdmin} from './Pages/FamAdmin'
+import {FamList} from './Pages/FamList'
+import {Home} from './Pages/Home'
+import {Navigation} from './components/navigation'
+import {Login} from './components/login'
+
+export const UserContext = createContext(null)
+
+export const App =()=> {
+  // const [UserContext, setUserContext] = useState('')
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* {
+      user.isLogged===false
+      ?<Navigation/>
+      :<Login/>
+      } */}
+    <UserContext.Provider value="xd">
+      <Login/>
+        <Switch>
+        <Route exact path="/" component={Home} />
+          <Route exact path="/FamList" component={FamList}/>
+          <Route exact path="/FamAdmin" component={FamAdmin}/>
+          <Route  path="*" component={()=><p>404 not found</p>} />
+      </Switch>
+    </UserContext.Provider>
     </div>
   );
 }
 
-export default App;
